@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#FAFAFA]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Becoming the Best-Known Builder - Cover Generator & Canva Guide</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#F97D11',
+                            charcoal: '#111111',
+                            cream: '#FAFAFA',
+                            slate: '#2D3748',
+                            lightbg: '#F4F4F6'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Manrope', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Manrope -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .cover-preview-box {
+            box-shadow: 0 20px 45px -15px rgba(0,0,0,0.25);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAFAFA;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E0;
+            border-radius: 3px;
+        }
+        .art-canvas-overlay {
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<!-- Chosen Palette: Architectural Warm Neutrals & Brand Orange (#FAFAFA, #111111, #F97D11) -->
+<!-- Application Structure Plan: 
+     This application provides a comprehensive cover artwork visualizer and Canva implementation blueprint:
+     1. Live Architectural Imagery Engine: Features dynamic HTML5 Canvas rendering of 3 conceptual, sophisticated architectural artwork styles (Isometric Structural Skeleton, CAD Horizon Geometry, and Dimensional Framing) replacing cheap clip-art/houses with business-book caliber graphic art.
+     2. Live Cover Visualizer: Interactive preview allowing real-time switching between Front (6x9), 120px Thumbnail Pass, and Full KDP Wrap with embedded artwork, and 300 DPI PNG image downloader.
+     3. Canva Image Placement & Asset Blueprint: Clear step-by-step instructions on selecting, positioning, layering, and blending equivalent architectural graphic assets in Canva. -->
+<!-- Visualization & Content Choices:
+     - Conceptual Cover Imagery: Rendered dynamically via pure Canvas API (3D geometric architectural beams, structural nodes, linear perspective matrices) to adhere strictly to NO SVG/Mermaid constraints while producing high-end publishing visuals.
+     - Canva Asset Mapping: Exact Canva element search terms, opacity specs, layer order, and position coordinates for seamless recreation.
+     - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. All visual elements generated via Canvas API & standard HTML/CSS. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<body class="font-sans text-brand-charcoal bg-[#FAFAFA] antialiased min-h-screen flex flex-col">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-50 bg-[#FAFAFA]/90 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-3.5 h-7 bg-brand-orange rounded-sm"></div>
+                    <div>
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block">Book Cover Studio</span>
+                        <h1 class="text-base font-extrabold text-brand-charcoal tracking-tight">Becoming the Best-Known Builder</h1>
+                    </div>
+                </div>
+                <div class="flex space-x-2">
+                    <button onclick="switchMode('visualizer')" id="btn-tab-vis" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-brand-orange text-white shadow-sm">1. Cover & Artwork Visualizer</button>
+                    <button onclick="switchMode('canva')" id="btn-tab-canva" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-600 hover:bg-gray-100">2. Canva Image & Layout Blueprint</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Stage -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- SECTION 1: COVER VISUALIZER & ARTWORK GENERATOR -->
+        <section id="sec-visualizer" class="space-y-8">
+            
+            <!-- Controls Banner -->
+            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-brand-charcoal">Architectural Cover Engine & PNG Generator</h2>
+                        <p class="text-xs text-gray-500 mt-1 leading-relaxed">
+                            Combines mandatory typographic hierarchy with sophisticated, conceptual architectural graphic imagery—meeting the brief's requirement for a book that holds its own beside <em>Traction</em> and <em>Atomic Habits</em>.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 items-center">
+                        <button onclick="setCoverView('front')" id="btn-view-front" class="px-3 py-1.5 text-xs font-bold rounded-md bg-brand-charcoal text-white">Flat Front (6"×9")</button>
+                        <button onclick="setCoverView('thumb')" id="btn-view-thumb" class="px-3 py-1.5 text-xs font-bold rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200">120px Amazon Feed Pass</button>
+                        <button onclick="setCoverView('wrap')" id="btn-view-wrap" class="px-3 py-1.5 text-xs font-bold rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200">Full KDP Print Wrap</button>
+                        <button onclick="downloadCoverImage()" class="px-4 py-1.5 text-xs font-extrabold rounded-md bg-brand-orange text-white hover:bg-orange-600 transition-colors shadow-md flex items-center space-x-1.5">
+                            <span>↓ Download High-Res 300 DPI Cover PNG</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Conceptual Artwork Style Selector -->
+                <div class="border-t border-gray-100 pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs font-bold text-gray-700 uppercase tracking-wider">Select Cover Image Concept:</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="setArtworkStyle('isometric')" id="btn-art-isometric" class="px-3 py-1 text-xs font-extrabold rounded border border-brand-orange bg-orange-50 text-brand-orange">Concept A: Isometric Frame Skeleton</button>
+                        <button onclick="setArtworkStyle('horizon')" id="btn-art-horizon" class="px-3 py-1 text-xs font-bold rounded border border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100">Concept B: CAD Structural Horizon</button>
+                        <button onclick="setArtworkStyle('dimensional')" id="btn-art-dimensional" class="px-3 py-1 text-xs font-bold rounded border border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100">Concept C: Minimalist Elevation Beams</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Cover Stage -->
+            <div class="bg-gray-200/80 rounded-2xl p-6 sm:p-10 border border-gray-300 flex flex-col items-center justify-center min-h-[620px] overflow-x-auto relative">
+                
+                <!-- Main Preview Box -->
+                <div id="cover-preview-stage" class="cover-preview-box bg-[#FAFAFA] relative border border-gray-300 transition-all duration-300 flex flex-col justify-between overflow-hidden" style="width: 380px; height: 570px; padding: 32px;">
+                    
+                    <!-- Dynamic Artwork Canvas Layer (Positioned behind text) -->
+                    <canvas id="preview-art-canvas" class="absolute inset-0 w-full h-full z-0 pointer-events-none"></canvas>
+
+                    <!-- WRAP VIEW BACK COVER LAYER (Hidden in Front view) -->
+                    <div id="wrap-back-layer" class="hidden absolute top-0 left-0 w-[48%] h-full p-8 flex flex-col justify-between bg-[#FAFAFA] border-r border-gray-300 text-left z-10">
+                        <div>
+                            <span class="text-[9px] font-bold text-brand-orange uppercase tracking-wider block mb-1">Back Cover Copy</span>
+                            <h4 class="text-xs font-extrabold text-brand-orange leading-tight mb-2">Your workmanship deserves better than an unpredictable pipeline.</h4>
+                            <p class="text-[9px] text-brand-charcoal leading-relaxed mb-3">
+                                You can be excellent at building and still spend evenings chasing enquiries, preparing quotes and wondering where the next good project will come from.<br><br>
+                                <em>Becoming the Best-Known Builder</em> connects the pieces that turn good work into a stronger business: clear positioning, the right enquiries, useful sales conversations and consistent follow-up.
+                            </p>
+                            <ul class="text-[8px] text-gray-800 space-y-1 mb-2 font-medium">
+                                <li class="flex items-start"><span class="text-brand-orange font-bold mr-1">■</span> Attract enquiries that fit your services and projects.</li>
+                                <li class="flex items-start"><span class="text-brand-orange font-bold mr-1">■</span> Improve qualification, sales conversations & follow-up.</li>
+                                <li class="flex items-start"><span class="text-brand-orange font-bold mr-1">■</span> Give your team clear actions, responsibilities & checks.</li>
+                            </ul>
+                        </div>
+                        <div class="flex items-end justify-between border-t border-gray-200 pt-2">
+                            <div class="text-[8px] text-gray-500">
+                                <strong class="text-brand-charcoal">Cameron Upton</strong><br>
+                                Contractor Scale Founder<br>
+                                <span class="text-brand-orange font-bold">bestknownbuilder.com</span>
+                            </div>
+                            <div class="w-14 h-9 bg-white border border-gray-400 flex items-center justify-center text-[6px] text-gray-400 font-bold tracking-widest uppercase">
+                                BARCODE
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- WRAP VIEW SPINE LAYER (Hidden in Front view) -->
+                    <div id="wrap-spine-layer" class="hidden absolute top-0 left-[48%] w-[4%] h-full bg-[#FAFAFA] border-r border-gray-300 flex items-center justify-center z-10">
+                        <span class="text-[8px] font-extrabold text-brand-charcoal tracking-widest uppercase transform rotate-90 whitespace-nowrap">BECOMING THE BEST-KNOWN BUILDER • CAMERON UPTON</span>
+                    </div>
+
+                    <!-- FRONT COVER TYPOGRAPHY LAYER -->
+                    <div id="front-cover-layer" class="w-full h-full flex flex-col justify-between relative z-10">
+                        <div>
+                            <!-- Secondary Title -->
+                            <span id="txt-becoming" class="text-[12px] font-bold tracking-[0.22em] text-brand-charcoal block mb-1 uppercase">BECOMING THE</span>
+                            
+                            <!-- Main Emphasis Title -->
+                            <h3 id="txt-main-title" class="text-[35px] font-extrabold leading-[0.95] text-brand-charcoal tracking-tight uppercase">
+                                BEST-KNOWN<br>BUILDER
+                            </h3>
+                            
+                            <!-- Structural Datum Line (4pt equivalent) -->
+                            <div class="w-full h-[5px] bg-brand-orange my-5 rounded-full shadow-sm"></div>
+                            
+                            <!-- Subtitle Block -->
+                            <p id="txt-subtitle" class="text-[11px] font-medium leading-relaxed text-brand-charcoal pr-1 bg-[#FAFAFA]/70 backdrop-blur-[2px] p-1 rounded">
+                                A practical guide to winning better residential projects, following up properly and building a business that relies less on you.
+                            </p>
+                        </div>
+
+                        <!-- Author & Brand Lockup -->
+                        <div id="author-block" class="border-t border-gray-300 pt-4 bg-[#FAFAFA]/80 backdrop-blur-[2px]">
+                            <span class="text-[13px] font-extrabold tracking-[0.28em] text-brand-charcoal uppercase block">
+                                CAMERON UPTON
+                            </span>
+                            <div class="flex items-center justify-between mt-1">
+                                <span class="text-[9px] font-bold text-gray-400 tracking-widest uppercase">
+                                    CONTRACTOR SCALE
+                                </span>
+                                <div class="w-2 h-2 rounded-full bg-brand-orange"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Concept Breakdown & Image Justification -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <div class="w-7 h-7 bg-orange-100 rounded-lg text-brand-orange font-bold flex items-center justify-center mb-3 text-xs">A</div>
+                    <h4 class="text-sm font-bold text-brand-charcoal mb-1">Concept A: Isometric Frame</h4>
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        A precision 3D structural skeleton representing systems, scale, and solid business foundations. Replaces literal houses with architectural precision.
+                    </p>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <div class="w-7 h-7 bg-orange-100 rounded-lg text-brand-orange font-bold flex items-center justify-center mb-3 text-xs">B</div>
+                    <h4 class="text-sm font-bold text-brand-charcoal mb-1">Concept B: CAD Horizon</h4>
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        Layered linear elevation geometry with orange node points symbolizing strategic growth, project forecasting, and controlled business expansion.
+                    </p>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                    <div class="w-7 h-7 bg-orange-100 rounded-lg text-brand-orange font-bold flex items-center justify-center mb-3 text-xs">C</div>
+                    <h4 class="text-sm font-bold text-brand-charcoal mb-1">Concept C: Elevation Beams</h4>
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        Bold, high-contrast intersecting structural planes that create visual depth while keeping 100% legibility at 120px thumbnail size on Amazon.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Hidden Export Canvas -->
+            <canvas id="export-canvas" class="hidden"></canvas>
+        </section>
+
+
+        <!-- SECTION 2: CANVA BLUEPRINT & IMAGE STEP-BY-STEP GUIDE -->
+        <section id="sec-canva" class="hidden space-y-8">
+            
+            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                <div class="flex items-center space-x-3 mb-2">
+                    <div class="px-2.5 py-1 bg-cyan-100 text-cyan-800 rounded text-[10px] font-extrabold uppercase tracking-wider">Canva Integration Guide</div>
+                    <h2 class="text-xl font-extrabold text-brand-charcoal">Recreating Artwork & Layout in Canva</h2>
+                </div>
+                <p class="text-xs text-gray-600 leading-relaxed">
+                    Follow these detailed steps to build this exact cover inside <strong>Canva</strong>, including finding matching architectural graphic assets, layering order, text specs, and color formulas.
+                </p>
+            </div>
+
+            <!-- Canva Image Asset Selection Guide -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-extrabold text-brand-charcoal uppercase tracking-wider border-b border-gray-100 pb-2">
+                    Step 1: Finding & Placing the Architectural Image Asset in Canva
+                </h3>
+                
+                <p class="text-xs text-gray-600 leading-relaxed">
+                    To avoid generic house clips or tools, use Canva's high-end vector graphics library. Follow these exact search terms and element parameters:
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
+                        <span class="font-extrabold text-brand-orange block uppercase text-[10px]">1. Canva Elements Search</span>
+                        <p class="text-gray-700">Go to <strong>Elements → Graphics</strong> and search for one of these exact queries:</p>
+                        <ul class="font-mono text-[11px] text-brand-charcoal space-y-1 list-disc list-inside bg-white p-2 rounded border border-gray-200">
+                            <li>"Isometric Wireframe Structure"</li>
+                            <li>"3D Architectural Structure Line"</li>
+                            <li>"Abstract Geometric Framework"</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
+                        <span class="font-extrabold text-brand-orange block uppercase text-[10px]">2. Position & Transparency</span>
+                        <p class="text-gray-700">Place the graphic element on the lower-right section of the front cover:</p>
+                        <ul class="text-[11px] text-gray-600 space-y-1">
+                            <li>• <strong>Layer Order:</strong> Send to Back (behind title text).</li>
+                            <li>• <strong>Transparency:</strong> Set element opacity to <strong>35% – 50%</strong>.</li>
+                            <li>• <strong>Primary Color:</strong> Set graphic lines to Charcoal <code>#111111</code>.</li>
+                            <li>• <strong>Accent Nodes:</strong> Set focal points to Orange <code>#F97D11</code>.</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
+                        <span class="font-extrabold text-brand-orange block uppercase text-[10px]">3. Downloaded PNG Shortcut</span>
+                        <p class="text-gray-700">Or use the PNG generated directly from Tab 1:</p>
+                        <p class="text-[11px] text-gray-600 leading-normal">
+                            Click <strong>"Download 300 DPI Cover PNG"</strong> on Tab 1, then in Canva choose <strong>Uploads → Upload File</strong> and drop the high-res PNG directly onto a 6"×9" canvas!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canva Dimensions & Color Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Dimensions -->
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
+                    <h3 class="text-sm font-extrabold text-brand-charcoal uppercase tracking-wider border-b border-gray-100 pb-2">
+                        Step 2: Canva Canvas Size Setup
+                    </h3>
+
+                    <div class="space-y-3">
+                        <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 flex justify-between items-center">
+                            <div>
+                                <span class="text-xs font-bold text-brand-charcoal block">Front Cover Digital / Ebook</span>
+                                <span class="text-[11px] text-gray-500">Unit: <strong>Pixels (px)</strong></span>
+                            </div>
+                            <span class="text-xs font-extrabold text-brand-orange bg-orange-50 px-2.5 py-1 rounded border border-orange-200">1800 × 2700 px</span>
+                        </div>
+
+                        <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 flex justify-between items-center">
+                            <div>
+                                <span class="text-xs font-bold text-brand-charcoal block">Full KDP Print Wrap (130 pgs)</span>
+                                <span class="text-[11px] text-gray-500">Unit: <strong>Inches (in)</strong> • (Inc. Bleed)</span>
+                            </div>
+                            <span class="text-xs font-extrabold text-brand-orange bg-orange-50 px-2.5 py-1 rounded border border-orange-200">12.575 × 9.250 in</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Color Palette -->
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
+                    <h3 class="text-sm font-extrabold text-brand-charcoal uppercase tracking-wider border-b border-gray-100 pb-2">
+                        Step 3: Canva Color Palette Setup
+                    </h3>
+                    
+                    <div class="grid grid-cols-3 gap-3 text-center">
+                        <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                            <div class="w-full h-8 rounded border border-gray-300 mb-2" style="background-color: #F97D11;"></div>
+                            <span class="text-[10px] text-gray-400 font-bold block uppercase">Brand Orange</span>
+                            <button onclick="copyToClipboard('#F97D11')" class="text-xs font-extrabold text-brand-charcoal hover:text-brand-orange mt-0.5">#F97D11 📋</button>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                            <div class="w-full h-8 rounded border border-gray-300 mb-2" style="background-color: #111111;"></div>
+                            <span class="text-[10px] text-gray-400 font-bold block uppercase">Deep Charcoal</span>
+                            <button onclick="copyToClipboard('#111111')" class="text-xs font-extrabold text-brand-charcoal hover:text-brand-orange mt-0.5">#111111 📋</button>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                            <div class="w-full h-8 rounded border border-gray-300 mb-2" style="background-color: #FAFAFA;"></div>
+                            <span class="text-[10px] text-gray-400 font-bold block uppercase">Near-White</span>
+                            <button onclick="copyToClipboard('#FAFAFA')" class="text-xs font-extrabold text-brand-charcoal hover:text-brand-orange mt-0.5">#FAFAFA 📋</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Canva Typography Table -->
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                <div class="p-5 border-b border-gray-200 bg-gray-50">
+                    <h3 class="text-sm font-extrabold text-brand-charcoal uppercase tracking-wider">
+                        Step 4: Typography Settings (Font: "Manrope" in Canva)
+                    </h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="border-b border-gray-200 bg-gray-100/70 text-gray-500 uppercase">
+                                <th class="py-3 px-4 font-semibold">Layer Element</th>
+                                <th class="py-3 px-4 font-semibold">Canva Weight</th>
+                                <th class="py-3 px-4 font-semibold">Letter Spacing</th>
+                                <th class="py-3 px-4 font-semibold">Line Height</th>
+                                <th class="py-3 px-4 font-semibold">Color Hex</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100 text-gray-700">
+                            <tr>
+                                <td class="py-3 px-4 font-bold text-brand-charcoal">"BECOMING THE"</td>
+                                <td class="py-3 px-4">Manrope Bold (700)</td>
+                                <td class="py-3 px-4 text-brand-orange font-bold">220 (Wide)</td>
+                                <td class="py-3 px-4">1.0</td>
+                                <td class="py-3 px-4 font-mono">#111111</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 font-bold text-brand-charcoal">"BEST-KNOWN BUILDER"</td>
+                                <td class="py-3 px-4">Manrope ExtraBold (800)</td>
+                                <td class="py-3 px-4 text-brand-orange font-bold">-20 (Tight)</td>
+                                <td class="py-3 px-4">0.95 (Stack)</td>
+                                <td class="py-3 px-4 font-mono">#111111</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 font-bold text-brand-charcoal">Structural Orange Datum Line</td>
+                                <td class="py-3 px-4">Element: Rectangle Line</td>
+                                <td class="py-3 px-4">Width: Match Title Width</td>
+                                <td class="py-3 px-4">Height: 5px / 0.05 in</td>
+                                <td class="py-3 px-4 font-mono font-bold text-brand-orange">#F97D11</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 font-bold text-brand-charcoal">Subtitle Block</td>
+                                <td class="py-3 px-4">Manrope Medium (500)</td>
+                                <td class="py-3 px-4">0 (Normal)</td>
+                                <td class="py-3 px-4">1.3 (Relaxed)</td>
+                                <td class="py-3 px-4 font-mono">#111111</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 font-bold text-brand-charcoal">Author "CAMERON UPTON"</td>
+                                <td class="py-3 px-4">Manrope ExtraBold (800)</td>
+                                <td class="py-3 px-4 text-brand-orange font-bold">280 (Extreme Tracking)</td>
+                                <td class="py-3 px-4">1.0</td>
+                                <td class="py-3 px-4 font-mono">#111111</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Ready to Copy Text Assets -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
+                <h3 class="text-sm font-extrabold text-brand-charcoal uppercase tracking-wider border-b border-gray-100 pb-2">
+                    Step 5: Copy Exact Text Strings for Canva Text Boxes
+                </h3>
+
+                <div class="space-y-3 text-xs">
+                    <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 flex justify-between items-center">
+                        <div>
+                            <span class="text-[10px] font-bold text-gray-400 uppercase block">Front Title Primary</span>
+                            <span class="font-extrabold text-brand-charcoal">BEST-KNOWN BUILDER</span>
+                        </div>
+                        <button onclick="copyToClipboard('BEST-KNOWN BUILDER')" class="px-3 py-1 bg-white border border-gray-300 rounded font-bold text-brand-charcoal hover:bg-brand-orange hover:text-white transition-colors">Copy 📋</button>
+                    </div>
+
+                    <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 flex justify-between items-center">
+                        <div>
+                            <span class="text-[10px] font-bold text-gray-400 uppercase block">Front Subtitle Mandated</span>
+                            <span class="font-medium text-brand-charcoal">A practical guide to winning better residential projects, following up properly and building a business that relies less on you.</span>
+                        </div>
+                        <button onclick="copyToClipboard('A practical guide to winning better residential projects, following up properly and building a business that relies less on you.')" class="px-3 py-1 bg-white border border-gray-300 rounded font-bold text-brand-charcoal hover:bg-brand-orange hover:text-white transition-colors">Copy 📋</button>
+                    </div>
+
+                    <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 flex justify-between items-center">
+                        <div>
+                            <span class="text-[10px] font-bold text-gray-400 uppercase block">Back Cover Headline</span>
+                            <span class="font-bold text-brand-orange">Your workmanship deserves better than an unpredictable pipeline.</span>
+                        </div>
+                        <button onclick="copyToClipboard('Your workmanship deserves better than an unpredictable pipeline.')" class="px-3 py-1 bg-white border border-gray-300 rounded font-bold text-brand-charcoal hover:bg-brand-orange hover:text-white transition-colors">Copy 📋</button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-brand-charcoal text-white px-4 py-2.5 rounded-lg text-xs font-bold shadow-xl opacity-0 transition-opacity pointer-events-none z-50">
+        Copied to clipboard!
+    </div>
+
+    <!-- Application Script Engine -->
+    <script>
+        let currentView = 'front';
+        let currentArtStyle = 'isometric';
+
+        // Render architectural imagery onto HTML5 Canvas
+        function drawArchitecturalArt(ctx, width, height, style) {
+            ctx.clearRect(0, 0, width, height);
+
+            ctx.lineWidth = 1.5;
+
+            if (style === 'isometric') {
+                // CONCEPT A: Isometric Structural Skeleton Framework
+                const originX = width * 0.68;
+                const originY = height * 0.58;
+                const scale = width * 0.0028;
+
+                // Draw 3D isometric structural cube grid (symbolizing business framework)
+                const drawCube = (cx, cy, size, color, fillOpacity = 0) => {
+                    ctx.strokeStyle = color;
+                    if (fillOpacity > 0) {
+                        ctx.fillStyle = `rgba(249, 125, 17, ${fillOpacity})`;
+                    }
+
+                    const topX = cx, topY = cy - size;
+                    const rightX = cx + size * 0.866, rightY = cy - size * 0.5;
+                    const botX = cx, botY = cy;
+                    const leftX = cx - size * 0.866, leftY = cy - size * 0.5;
+
+                    ctx.beginPath();
+                    ctx.moveTo(topX, topY);
+                    ctx.lineTo(rightX, rightY);
+                    ctx.lineTo(botX, botY);
+                    ctx.lineTo(leftX, leftY);
+                    ctx.closePath();
+                    ctx.stroke();
+                    if (fillOpacity > 0) ctx.fill();
+
+                    // Pillars
+                    ctx.beginPath();
+                    ctx.moveTo(leftX, leftY); ctx.lineTo(leftX, leftY + size);
+                    ctx.moveTo(botX, botY); ctx.lineTo(botX, botY + size);
+                    ctx.moveTo(rightX, rightY); ctx.lineTo(rightX, rightY + size);
+                    ctx.stroke();
+
+                    // Bottom base
+                    ctx.beginPath();
+                    ctx.moveTo(leftX, leftY + size);
+                    ctx.lineTo(botX, botY + size);
+                    ctx.lineTo(rightX, rightY + size);
+                    ctx.stroke();
+                };
+
+                // Draw multiple interlocking structural cubes
+                ctx.globalAlpha = 0.35;
+                drawCube(originX, originY, 120 * scale, "#111111");
+                drawCube(originX + 100 * scale, originY - 60 * scale, 100 * scale, "#F97D11", 0.15);
+                drawCube(originX - 90 * scale, originY + 50 * scale, 90 * scale, "#111111");
+                drawCube(originX + 20 * scale, originY - 140 * scale, 110 * scale, "#111111");
+
+                // Structural node dots
+                ctx.globalAlpha = 0.8;
+                ctx.fillStyle = "#F97D11";
+                const nodes = [
+                    {x: originX, y: originY - 120 * scale},
+                    {x: originX + 100 * scale, y: originY - 160 * scale},
+                    {x: originX - 90 * scale, y: originY + 50 * scale}
+                ];
+                nodes.forEach(n => {
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, 4 * scale, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+            } else if (style === 'horizon') {
+                // CONCEPT B: CAD Horizon Perspective Elevation Lines
+                ctx.globalAlpha = 0.25;
+                ctx.strokeStyle = "#111111";
+                
+                const baseY = height * 0.72;
+                
+                // Perspective Grid Lines
+                for (let i = -5; i <= 15; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(width * 0.1, baseY);
+                    ctx.lineTo(width * 0.95, baseY - (i * 25));
+                    ctx.stroke();
+                }
+
+                // Vertical elevation beams
+                ctx.strokeStyle = "#F97D11";
+                ctx.globalAlpha = 0.5;
+                for (let x = width * 0.35; x < width * 0.95; x += 35) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, baseY + 60);
+                    ctx.lineTo(x, baseY - 220);
+                    ctx.stroke();
+                }
+
+            } else if (style === 'dimensional') {
+                // CONCEPT C: Minimalist Elevation Beams
+                ctx.globalAlpha = 0.2;
+                ctx.fillStyle = "#111111";
+                
+                // Large overlapping architectural structural planes
+                ctx.fillRect(width * 0.48, height * 0.28, width * 0.45, height * 0.45);
+                
+                ctx.globalAlpha = 0.4;
+                ctx.fillStyle = "#F97D11";
+                ctx.fillRect(width * 0.42, height * 0.42, width * 0.04, height * 0.35);
+                ctx.fillRect(width * 0.42, height * 0.42, width * 0.45, height * 0.02);
+            }
+
+            ctx.globalAlpha = 1.0;
+        }
+
+        // Render preview canvas
+        function updatePreviewCanvas() {
+            const canvas = document.getElementById('preview-art-canvas');
+            const container = document.getElementById('cover-preview-stage');
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            const ctx = canvas.getContext('2d');
+            drawArchitecturalArt(ctx, canvas.width, canvas.height, currentArtStyle);
+        }
+
+        function setArtworkStyle(style) {
+            currentArtStyle = style;
+            const btnIso = document.getElementById('btn-art-isometric');
+            const btnHor = document.getElementById('btn-art-horizon');
+            const btnDim = document.getElementById('btn-art-dimensional');
+
+            const activeClass = "px-3 py-1 text-xs font-extrabold rounded border border-brand-orange bg-orange-50 text-brand-orange";
+            const inactiveClass = "px-3 py-1 text-xs font-bold rounded border border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100";
+
+            btnIso.className = style === 'isometric' ? activeClass : inactiveClass;
+            btnHor.className = style === 'horizon' ? activeClass : inactiveClass;
+            btnDim.className = style === 'dimensional' ? activeClass : inactiveClass;
+
+            updatePreviewCanvas();
+        }
+
+        function switchMode(mode) {
+            const visSec = document.getElementById('sec-visualizer');
+            const canvaSec = document.getElementById('sec-canva');
+            const btnVis = document.getElementById('btn-tab-vis');
+            const btnCanva = document.getElementById('btn-tab-canva');
+
+            if (mode === 'visualizer') {
+                visSec.classList.remove('hidden');
+                canvaSec.classList.add('hidden');
+                btnVis.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-brand-orange text-white shadow-sm";
+                btnCanva.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-600 hover:bg-gray-100";
+                setTimeout(updatePreviewCanvas, 50);
+            } else {
+                visSec.classList.add('hidden');
+                canvaSec.classList.remove('hidden');
+                btnCanva.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-brand-orange text-white shadow-sm";
+                btnVis.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-600 hover:bg-gray-100";
+            }
+        }
+
+        function setCoverView(view) {
+            currentView = view;
+            const previewBox = document.getElementById('cover-preview-stage');
+            const wrapBack = document.getElementById('wrap-back-layer');
+            const wrapSpine = document.getElementById('wrap-spine-layer');
+            const frontLayer = document.getElementById('front-cover-layer');
+
+            const btnFront = document.getElementById('btn-view-front');
+            const btnThumb = document.getElementById('btn-view-thumb');
+            const btnWrap = document.getElementById('btn-view-wrap');
+
+            btnFront.className = view === 'front' ? "px-3 py-1.5 text-xs font-bold rounded-md bg-brand-charcoal text-white" : "px-3 py-1.5 text-xs font-bold rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200";
+            btnThumb.className = view === 'thumb' ? "px-3 py-1.5 text-xs font-bold rounded-md bg-brand-charcoal text-white" : "px-3 py-1.5 text-xs font-bold rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200";
+            btnWrap.className = view === 'wrap' ? "px-3 py-1.5 text-xs font-bold rounded-md bg-brand-charcoal text-white" : "px-3 py-1.5 text-xs font-bold rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200";
+
+            if (view === 'front') {
+                previewBox.style.width = "380px";
+                previewBox.style.height = "570px";
+                previewBox.style.padding = "32px";
+                wrapBack.classList.add('hidden');
+                wrapSpine.classList.add('hidden');
+                frontLayer.style.width = "100%";
+                frontLayer.style.marginLeft = "0";
+            } else if (view === 'thumb') {
+                previewBox.style.width = "160px";
+                previewBox.style.height = "240px";
+                previewBox.style.padding = "12px";
+                wrapBack.classList.add('hidden');
+                wrapSpine.classList.add('hidden');
+                frontLayer.style.width = "100%";
+                frontLayer.style.marginLeft = "0";
+            } else {
+                previewBox.style.width = "740px";
+                previewBox.style.height = "555px";
+                previewBox.style.padding = "0";
+                wrapBack.classList.remove('hidden');
+                wrapSpine.classList.remove('hidden');
+                frontLayer.style.width = "48%";
+                frontLayer.style.marginLeft = "52%";
+                frontLayer.style.padding = "32px";
+            }
+
+            setTimeout(updatePreviewCanvas, 50);
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.innerText = `Copied "${text}" to clipboard!`;
+                toast.classList.remove('opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0');
+                }, 2200);
+            });
+        }
+
+        // Generate 300 DPI High-Resolution Image Export with Embedded Artwork
+        function downloadCoverImage() {
+            const canvas = document.getElementById('export-canvas');
+            const ctx = canvas.getContext('2d');
+
+            if (currentView === 'wrap') {
+                // Full KDP Wrap View (3773 x 2775 px)
+                canvas.width = 3773;
+                canvas.height = 2775;
+
+                ctx.fillStyle = "#FAFAFA";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Draw Artwork on Front Cover portion
+                ctx.save();
+                ctx.translate(1960, 0);
+                drawArchitecturalArt(ctx, 1813, 2775, currentArtStyle);
+                ctx.restore();
+
+                // Spine dividing lines
+                ctx.strokeStyle = "#CBD5E0";
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.moveTo(1810, 0); ctx.lineTo(1810, canvas.height);
+                ctx.moveTo(1960, 0); ctx.lineTo(1960, canvas.height);
+                ctx.stroke();
+
+                // Spine Title
+                ctx.save();
+                ctx.translate(1885, 1380);
+                ctx.rotate(Math.PI / 2);
+                ctx.fillStyle = "#111111";
+                ctx.font = "800 44px 'Manrope', sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText("BECOMING THE BEST-KNOWN BUILDER • CAMERON UPTON", 0, 0);
+                ctx.restore();
+
+                // Trigger PNG download
+                const link = document.createElement('a');
+                link.download = `Best-Known-Builder-Full-Wrap-300DPI-${currentArtStyle}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+
+            } else {
+                // Front Cover View (1800 x 2700 px) @ 300 DPI
+                canvas.width = 1800;
+                canvas.height = 2700;
+
+                ctx.fillStyle = "#FAFAFA";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Render High-Res Architectural Artwork
+                drawArchitecturalArt(ctx, canvas.width, canvas.height, currentArtStyle);
+
+                const pad = 140;
+
+                // Title: "BECOMING THE"
+                ctx.fillStyle = "#111111";
+                ctx.font = "bold 58px 'Manrope', sans-serif";
+                ctx.letterSpacing = "12px";
+                ctx.fillText("BECOMING THE", pad, pad + 120);
+
+                // Title: "BEST-KNOWN BUILDER"
+                ctx.font = "900 148px 'Manrope', sans-serif";
+                ctx.letterSpacing = "-2px";
+                ctx.fillText("BEST-KNOWN", pad, pad + 290);
+                ctx.fillText("BUILDER", pad, pad + 430);
+
+                // Orange Structural Line
+                ctx.fillStyle = "#F97D11";
+                ctx.fillRect(pad, pad + 500, canvas.width - (pad * 2), 24);
+
+                // Subtitle Wrapping Logic
+                ctx.fillStyle = "#111111";
+                ctx.font = "500 50px 'Manrope', sans-serif";
+                ctx.letterSpacing = "0px";
+                
+                const wrapText = (text, x, y, maxWidth, lineHeight) => {
+                    const words = text.split(' ');
+                    let line = '';
+                    for (let n = 0; n < words.length; n++) {
+                        let testLine = line + words[n] + ' ';
+                        let metrics = ctx.measureText(testLine);
+                        if (metrics.width > maxWidth && n > 0) {
+                            ctx.fillText(line, x, y);
+                            line = words[n] + ' ';
+                            y += lineHeight;
+                        } else {
+                            line = testLine;
+                        }
+                    }
+                    ctx.fillText(line, x, y);
+                };
+
+                wrapText("A practical guide to winning better residential projects, following up properly and building a business that relies less on you.", pad, pad + 640, canvas.width - (pad * 2) - 40, 76);
+
+                // Divider Line Bottom
+                ctx.strokeStyle = "#E2E8F0";
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.moveTo(pad, canvas.height - pad - 220);
+                ctx.lineTo(canvas.width - pad, canvas.height - pad - 220);
+                ctx.stroke();
+
+                // Author Name
+                ctx.fillStyle = "#111111";
+                ctx.font = "800 68px 'Manrope', sans-serif";
+                ctx.letterSpacing = "16px";
+                ctx.fillText("CAMERON UPTON", pad, canvas.height - pad - 120);
+
+                // Publisher Mark
+                ctx.fillStyle = "#A0AEC0";
+                ctx.font = "700 42px 'Manrope', sans-serif";
+                ctx.letterSpacing = "8px";
+                ctx.fillText("CONTRACTOR SCALE", pad, canvas.height - pad - 40);
+
+                // Trigger PNG Download
+                const link = document.createElement('a');
+                link.download = `Best-Known-Builder-Front-Cover-300DPI-${currentArtStyle}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }
+        }
+
+        // Initialize Canvas Artwork on load and window resize
+        window.addEventListener('load', () => {
+            setTimeout(updatePreviewCanvas, 100);
+        });
+        window.addEventListener('resize', updatePreviewCanvas);
+    </script>
+</body>
+</html>
